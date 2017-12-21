@@ -14,12 +14,16 @@ try {
     browserDataArray.forEach(function(browserData, index) {
         const keys = Object.keys(browserData);
         const data = [];
+          let parsedDataTemp = url.parse(browserData["url"])
+        const hostname1 = parsedDataTemp.hostname;
+        let mappedLinks=["www.google.co.in","www.facebook.com","www.youtube.com","www.ndtv.com","www.cricbuzz.com"]
+        if(mappedLinks.indexOf(hostname1) !=-1){
             keys.forEach(function(key, keyIndex) {
                     switch (key) {
                         case "lastVisitTime":
                         let dateOftheWeek=moment(new Date(browserData[key]));
                             data.push(convertToString(dateOftheWeek.format('dddd')));
-
+                            data.push((dateOftheWeek.format('HH')));
                             break;
                         case "title":
                             break;
@@ -38,6 +42,7 @@ try {
 
             })
             tempFilepathStream.write(data.join() + "\n");
+        }
 
     });
     console.log(JSON.stringify(uniqueDomains));
